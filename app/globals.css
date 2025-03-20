@@ -4,65 +4,65 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 34 33% 98%;
+    --foreground: 20 20% 17%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card: 34 33% 98%;
+    --card-foreground: 20 20% 17%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover: 34 33% 98%;
+    --popover-foreground: 20 20% 17%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 25 39% 44%;
+    --primary-foreground: 34 33% 98%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 20 10% 67%;
+    --secondary-foreground: 20 20% 17%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 34 20% 92%;
+    --muted-foreground: 20 10% 45%;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 25 39% 44%;
+    --accent-foreground: 34 33% 98%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 34 33% 98%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --border: 20 10% 85%;
+    --input: 20 10% 85%;
+    --ring: 25 39% 44%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 20 10% 15%;
+    --foreground: 34 20% 91%;
 
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 20 10% 15%;
+    --card-foreground: 34 20% 91%;
 
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 20 10% 15%;
+    --popover-foreground: 34 20% 91%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 25 39% 44%;
+    --primary-foreground: 34 20% 91%;
 
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 20 10% 25%;
+    --secondary-foreground: 34 20% 91%;
 
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted: 20 10% 25%;
+    --muted-foreground: 20 10% 60%;
 
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 25 39% 44%;
+    --accent-foreground: 34 20% 91%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 34 20% 91%;
 
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --border: 20 10% 25%;
+    --input: 20 10% 25%;
+    --ring: 25 39% 44%;
   }
 }
 
@@ -83,6 +83,7 @@
 }
 
 @layer utilities {
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -94,5 +95,129 @@
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+  }
+
+
+
+  @layer components {
+
+    /* Card hover effect */
+    .card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  /* Reading optimizations */
+  .reading-prose {
+    @apply prose prose-lg max-w-none prose-headings:font-lxgw prose-headings:tracking-tight prose-headings:text-foreground/90 prose-p:font-lxgw prose-p:leading-relaxed prose-p:tracking-wide prose-p:text-foreground/80 prose-a:underline prose-a:decoration-primary/40 prose-a:underline-offset-2 prose-a:text-primary/90 prose-strong:text-primary prose-strong:font-medium prose-em:text-foreground/70 prose-em:not-italic prose-em:font-normal prose-blockquote:border-l-2 prose-blockquote:border-primary/30 prose-blockquote:not-italic prose-blockquote:font-normal prose-blockquote:text-foreground/75 prose-code:text-primary prose-code:font-normal prose-code:before:content-none prose-code:after:content-none prose-pre:bg-muted prose-pre:border prose-img:rounded-lg prose-img:shadow-sm prose-li:text-foreground/80 prose-li:marker:text-primary/60;
+
+    a:hover {
+      @apply text-primary;
+    }
+
+    pre {
+      @apply relative overflow-x-auto;
+    }
+
+    img {
+      @apply mx-auto my-8;
+    }
+  }
+
+  /* Reading progress bar */
+  .reading-progress {
+    @apply fixed top-0 left-0 h-1 bg-primary/60 transition-all duration-300 z-50;
+  }
+
+  /* Table of contents */
+  .table-of-contents {
+    @apply fixed right-8 top-32 w-64 p-4 rounded-lg bg-card border shadow-sm max-h-[calc(100vh-12rem)] overflow-y-auto no-scrollbar;
+  }
+
+  .toc-link {
+    @apply block py-1 text-sm text-muted-foreground hover:text-foreground transition-colors;
+  }
+
+  .toc-active {
+    @apply text-primary font-medium;
+  }
+
+  /* Paper shadow effects */
+  .paper-shadow {
+    box-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.03),
+      0 2px 2px rgba(0, 0, 0, 0.03),
+      0 4px 4px rgba(0, 0, 0, 0.03);
+  }
+
+  .dark .paper-shadow {
+    box-shadow:
+      0 1px 1px rgba(0, 0, 0, 0.2),
+      0 2px 2px rgba(0, 0, 0, 0.2),
+      0 4px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Card transitions */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1;
+  }
+
+  .dark .card-hover:hover {
+    @apply bg-accent/5;
+  }
+
+  /* Grid pattern background */
+  .bg-grid-pattern {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .dark .bg-grid-pattern {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+}
+
+/* Base styles for better reading experience */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground min-h-screen;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-lxgw tracking-tight;
+  }
+}
+
+
+@layer components {
+  .nav-item {
+    @apply text-lg font-medium text-secondary-foreground hover:text-primary transition-colors relative;
+  }
+  .nav-item::before {
+    @apply absolute w-full h-[1px] bg-primary/60 bottom-0 left-0 origin-left transform scale-x-0 transition-transform duration-300 ease-out;
+    content: '';
+  }
+  .nav-item:hover::before {
+    @apply transform scale-x-100;
   }
 }

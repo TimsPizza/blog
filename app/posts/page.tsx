@@ -1,144 +1,114 @@
-import {
-  getAllPosts,
-  getAllAuthors,
-  getAllTags,
-  getAllCategories,
-  searchAuthors,
-  searchTags,
-  searchCategories,
-} from "@/lib/wordpress";
-
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
-import { Section, Container, Prose } from "@/components/craft";
-import { PostCard } from "@/components/posts/post-card";
-import { FilterPosts } from "@/components/posts/filter";
-import { SearchInput } from "@/components/posts/search-input";
-
-import type { Metadata } from "next";
+import { Section, Container } from "@/components/craft";
+import { SearchFilter } from "@/components/posts/search-filter";
+import { PostsGrid } from "@/components/posts/posts-grid";
+import { getAllPosts, getAllCategories } from "@/lib/wordpress";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog Posts",
-  description: "Browse all our blog posts",
+  title: "Articles",
+  description: "A collection of all articles on the site.",
 };
 
-export const dynamic = "auto";
-export const revalidate = 600;
+interface SearchParams {
+  search?: string;
+  category?: string;
+  page?: string;
+  sort?: string;
+}
 
-export default async function Page({
+const POSTS_PER_PAGE = 12;
+
+export default async function PostsPage({
   searchParams,
 }: {
-  searchParams: Promise<{
-    author?: string;
-    tag?: string;
-    category?: string;
-    page?: string;
-    search?: string;
-  }>;
+  searchParams: SearchParams;
 }) {
-  const params = await searchParams;
-  const { author, tag, category, page: pageParam, search } = params;
+  // 获取查询参数
+  const page = parseInt(searchParams.page || "1");
+  const search = searchParams.search || "";
+  const category = searchParams.category;
+  const sort = searchParams.sort || "date";
 
-  // Fetch data based on search parameters
-  const [posts, authors, tags, categories] = await Promise.all([
-    getAllPosts({ author, tag, category, search }),
-    search ? searchAuthors(search) : getAllAuthors(),
-    search ? searchTags(search) : getAllTags(),
-    search ? searchCategories(search) : getAllCategories(),
-  ]);
+  // 获取所有类别
+  const categories = await getAllCategories();
 
-  // Handle pagination
-  const page = pageParam ? parseInt(pageParam, 10) : 1;
-  const postsPerPage = 9;
-  const totalPages = Math.ceil(posts.length / postsPerPage);
-  const paginatedPosts = posts.slice(
-    (page - 1) * postsPerPage,
-    page * postsPerPage
+  // 构建查询条件
+  const queryParams = (() => {
+    if (!search && !category) return undefined;
+    
+    const params: {
+      search?: string;
+      category?: number;
+    } = {};
+
+    if (search && search.trim() !== "") {
+      params.search = search;
+    }
+    
+    if (category) {
+      const categoryId = parseInt(category);
+      if (!isNaN(categoryId)) {
+        params.category = categoryId;
+      }
+    }
+
+    return Object.keys(params).length > 0 ? params : undefined;
+  })();
+
+  const allPosts = await getAllPosts(queryParams);
+
+  // 根据排序参数排序
+  const sortedPosts = [...allPosts].sort((a, b) => {
+    switch (sort) {
+      case "date-asc":
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      case "views":
+        return (
+          (parseInt(String(b.meta?.views ?? "0")) || 0) -
+          (parseInt(String(a.meta?.views ?? "0")) || 0)
+        );
+      case "views-asc":
+        return (
+          (parseInt(String(a.meta?.views ?? "0")) || 0) -
+          (parseInt(String(b.meta?.views ?? "0")) || 0)
+        );
+      case "date":
+      default:
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+    }
+  });
+
+  // 分页
+  const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const paginatedPosts = sortedPosts.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE,
   );
-
-  // Create pagination URL helper
-  const createPaginationUrl = (newPage: number) => {
-    const params = new URLSearchParams();
-    if (newPage > 1) params.set("page", newPage.toString());
-    if (category) params.set("category", category);
-    if (author) params.set("author", author);
-    if (tag) params.set("tag", tag);
-    if (search) params.set("search", search);
-    return `/posts${params.toString() ? `?${params.toString()}` : ""}`;
-  };
 
   return (
     <Section>
-      <Container>
-        <div className="space-y-8">
-          <Prose>
-            <h2>All Posts</h2>
-            <p className="text-muted-foreground">
-              {posts.length} {posts.length === 1 ? "post" : "posts"} found
-              {search && " matching your search"}
-            </p>
-          </Prose>
-
-          <div className="space-y-4">
-            <SearchInput defaultValue={search} />
-
-            <FilterPosts
-              authors={authors}
-              tags={tags}
-              categories={categories}
-              selectedAuthor={author}
-              selectedTag={tag}
-              selectedCategory={category}
-            />
-          </div>
-
-          {paginatedPosts.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-4">
-              {paginatedPosts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-            </div>
-          ) : (
-            <div className="h-24 w-full border rounded-lg bg-accent/25 flex items-center justify-center">
-              <p>No posts found</p>
-            </div>
-          )}
-
-          {totalPages > 1 && (
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    className={
-                      page <= 1 ? "pointer-events-none opacity-50" : ""
-                    }
-                    href={createPaginationUrl(page - 1)}
-                  />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href={createPaginationUrl(page)}>
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext
-                    className={
-                      page >= totalPages ? "pointer-events-none opacity-50" : ""
-                    }
-                    href={createPaginationUrl(page + 1)}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          )}
+      <Container className="space-y-8">
+        <div>
+          <h1 className="mb-8 text-3xl font-medium text-foreground/90 tracking-tight sm:text-4xl">Articles</h1>
+          <SearchFilter categories={categories} />
         </div>
+
+        <div className="py-4">
+          {/* 结果统计 */}
+          <p className="text-sm text-muted-foreground/80">
+            {`Found ${sortedPosts.length} article(s)`}
+            {search && `,include keywords "${search}"`}
+            {category &&
+              `,in category "${categories.find((cat) => cat.id.toString() === category)?.name || category}"`}
+          </p>
+        </div>
+
+        <PostsGrid
+          posts={paginatedPosts}
+          currentPage={currentPage}
+          totalPages={totalPages}
+        />
       </Container>
     </Section>
   );

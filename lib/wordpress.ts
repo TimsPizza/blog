@@ -38,13 +38,17 @@ function getUrl(path: string, query?: Record<string, any>) {
 const defaultFetchOptions: FetchOptions = {
   next: {
     tags: ["wordpress"],
-    revalidate: 3600, // Revalidate every hour by default
+    revalidate: 1800, // Revalidate every half hour by default
   },
 };
 
 // Error handling utility
 class WordPressAPIError extends Error {
-  constructor(message: string, public status: number, public endpoint: string) {
+  constructor(
+    message: string,
+    public status: number,
+    public endpoint: string,
+  ) {
     super(message);
     this.name = "WordPressAPIError";
   }
@@ -53,7 +57,7 @@ class WordPressAPIError extends Error {
 // Utility function for making WordPress API requests
 async function wordpressFetch<T>(
   url: string,
-  options: FetchOptions = {}
+  options: FetchOptions = {},
 ): Promise<T> {
   const userAgent = "Next.js WordPress Client";
 
@@ -69,7 +73,7 @@ async function wordpressFetch<T>(
     throw new WordPressAPIError(
       `WordPress API request failed: ${response.statusText}`,
       response.status,
-      url
+      url,
     );
   }
 
@@ -79,11 +83,11 @@ async function wordpressFetch<T>(
 // WordPress Functions
 
 export async function getAllPosts(filterParams?: {
-  author?: string;
-  tag?: string;
-  category?: string;
+  author?: string | number;
+  tag?: string | number;
+  category?: string | number;
   search?: string;
-}): Promise<Post[]> {
+} | undefined): Promise<Post[]> {
   const query: Record<string, any> = {
     _embed: true,
     per_page: 100,
@@ -342,7 +346,7 @@ export async function getPostsByAuthor(authorId: number): Promise<Post[]> {
 }
 
 export async function getPostsByAuthorSlug(
-  authorSlug: string
+  authorSlug: string,
 ): Promise<Post[]> {
   const author = await getAuthorBySlug(authorSlug);
   const url = getUrl("/wp-json/wp/v2/posts", { author: author.id });
@@ -357,7 +361,7 @@ export async function getPostsByAuthorSlug(
 }
 
 export async function getPostsByCategorySlug(
-  categorySlug: string
+  categorySlug: string,
 ): Promise<Post[]> {
   const category = await getCategoryBySlug(categorySlug);
   const url = getUrl("/wp-json/wp/v2/posts", { categories: category.id });

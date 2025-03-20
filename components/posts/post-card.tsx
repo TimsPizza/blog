@@ -1,24 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
-
 import { Post } from "@/lib/wordpress.d";
 import { cn } from "@/lib/utils";
-
 import {
   getFeaturedMediaById,
   getAuthorById,
   getCategoryById,
 } from "@/lib/wordpress";
+import { Badge } from "@/components/ui/badge";
 
 export async function PostCard({ post }: { post: Post }) {
   const media = post.featured_media
     ? await getFeaturedMediaById(post.featured_media)
     : null;
   const author = post.author ? await getAuthorById(post.author) : null;
-  const date = new Date(post.date).toLocaleDateString("en-US", {
+  const date = new Date(post.date).toLocaleDateString("zh-CN", {
+    year: "numeric",
     month: "long",
     day: "numeric",
-    year: "numeric",
   });
   const category = post.categories?.[0]
     ? await getCategoryById(post.categories[0])
@@ -28,47 +27,54 @@ export async function PostCard({ post }: { post: Post }) {
     <Link
       href={`/posts/${post.slug}`}
       className={cn(
-        "border p-4 bg-accent/30 rounded-lg group flex justify-between flex-col not-prose gap-8",
-        "hover:bg-accent/75 transition-all"
+        "group flex flex-col justify-between gap-8 rounded-lg border",
+        "bg-card p-4 text-card-foreground shadow-sm transition-all",
+        "hover:bg-accent/5 hover:shadow-md"
       )}
     >
       <div className="flex flex-col gap-4">
-        <div className="h-48 w-full overflow-hidden relative rounded-md border flex items-center justify-center bg-muted">
+        <div className="relative flex h-48 w-full items-center justify-center overflow-hidden rounded-md border bg-muted">
           {media?.source_url ? (
             <Image
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               src={media.source_url}
-              alt={post.title?.rendered || "Post thumbnail"}
+              alt={post.title?.rendered || "文章配图"}
               width={400}
               height={200}
             />
           ) : (
-            <div className="flex items-center justify-center w-full h-full text-muted-foreground">
-              No image available
+            <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+              暂无配图
             </div>
           )}
         </div>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: post.title?.rendered || "Untitled Post",
-          }}
-          className="text-xl text-primary font-medium group-hover:underline decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
-        ></div>
-        <div
-          className="text-sm"
-          dangerouslySetInnerHTML={{
-            __html: post.excerpt?.rendered
-              ? post.excerpt.rendered.split(" ").slice(0, 12).join(" ").trim() +
-                "..."
-              : "No excerpt available",
-          }}
-        ></div>
+        <div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: post.title?.rendered || "无标题",
+            }}
+            className="mb-2 text-xl font-medium text-foreground transition-colors group-hover:text-primary"
+          />
+          <div
+            className="text-sm text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html: post.excerpt?.rendered
+                ? post.excerpt.rendered.split(" ").slice(0, 12).join(" ").trim() +
+                  "..."
+                : "暂无摘要",
+            }}
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">
-        <hr />
-        <div className="flex justify-between items-center text-xs">
-          <p>{category?.name || "Uncategorized"}</p>
+        <div className="border-t border-border" />
+        <div className="flex items-center justify-between text-sm text-muted-foreground/80">
+          {category?.name && (
+            <Badge variant="secondary" className="rounded-full">
+              {category.name}
+            </Badge>
+          )}
           <p>{date}</p>
         </div>
       </div>
