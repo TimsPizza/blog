@@ -21,24 +21,25 @@ export function TableOfContents({ content }: { content: string }) {
 
   // 提取标题并处理内容
   useEffect(() => {
-    const extracted = content.match(/<h[23][^>]*>(.*?)<\/h[23]>/g)?.map(heading => {
-      const level = heading.charAt(2);
-      const text = heading.replace(/<[^>]*>/g, "");
-      const id = generateId(text);
-      return { level, text, id };
-    }) || [];
+    const extracted =
+      content.match(/<h[23][^>]*>(.*?)<\/h[23]>/g)?.map((heading) => {
+        const level = heading.charAt(2);
+        const text = heading.replace(/<[^>]*>/g, "");
+        const id = generateId(text);
+        return { level, text, id };
+      }) || [];
 
     setHeadings(extracted);
 
     // 为文章中的标题添加 id
-    const article = document.querySelector('article');
+    const article = document.querySelector("article");
     if (article) {
       article.innerHTML = article.innerHTML.replace(
         /<h([23])[^>]*>(.*?)<\/h\1>/g,
         (match, level, text) => {
           const id = generateId(text);
           return `<h${level} id="${id}">${text}</h${level}>`;
-        }
+        },
       );
     }
   }, [content]);
@@ -55,7 +56,7 @@ export function TableOfContents({ content }: { content: string }) {
       },
       {
         rootMargin: "-20% 0% -35% 0%",
-      }
+      },
     );
 
     headings.forEach(({ id }) => {
@@ -75,10 +76,10 @@ export function TableOfContents({ content }: { content: string }) {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
-      className="hidden xl:block fixed right-8 top-32 w-64 rounded-lg bg-card border shadow-sm"
+      className="fixed right-8 top-32 hidden w-64 rounded-lg border bg-card shadow-sm xl:block"
     >
-      <div className="p-4 border-b">
-        <h4 className="text-sm font-medium">目录</h4>
+      <div className="border-b p-4">
+        <h4 className="text-sm font-medium">Table of Contents</h4>
       </div>
       <ScrollArea className="h-[calc(100vh-16rem)]">
         <nav className="p-4">
@@ -96,8 +97,8 @@ export function TableOfContents({ content }: { content: string }) {
                 "block py-1 text-sm transition-colors hover:text-foreground",
                 heading.level === "3" ? "pl-4" : "",
                 activeId === heading.id
-                  ? "text-primary font-medium"
-                  : "text-muted-foreground"
+                  ? "font-medium text-primary"
+                  : "text-muted-foreground",
               )}
             >
               {heading.text}

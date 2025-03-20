@@ -38,20 +38,20 @@ export async function PostCard({ post }: { post: Post }) {
             <Image
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               src={media.source_url}
-              alt={post.title?.rendered || "文章配图"}
+              alt={post.title?.rendered || "No Image"}
               width={400}
               height={200}
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-              暂无配图
+              No Image
             </div>
           )}
         </div>
         <div>
           <div
             dangerouslySetInnerHTML={{
-              __html: post.title?.rendered || "无标题",
+              __html: post.title?.rendered || "Untitled",
             }}
             className="mb-2 text-xl font-medium text-foreground transition-colors group-hover:text-primary"
           />
@@ -61,7 +61,7 @@ export async function PostCard({ post }: { post: Post }) {
               __html: post.excerpt?.rendered
                 ? post.excerpt.rendered.split(" ").slice(0, 12).join(" ").trim() +
                   "..."
-                : "暂无摘要",
+                : "No excerpt available",
             }}
           />
         </div>

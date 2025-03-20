@@ -35,31 +35,31 @@ export function FeaturedPostCard({
     day: "numeric",
   });
 
-  // 估算阅读时间（假设每分钟阅读300字）
+  // estimate reading time
   const readingTime = Math.ceil(
-    post.content.rendered.replace(/<[^>]*>/g, "").length / 300
+    post.content.rendered.replace(/<[^>]*>/g, "").length / 300,
   );
 
   return (
     <Link
       href={`/posts/${post.slug}`}
       className={cn(
-        "group block overflow-hidden rounded-lg border bg-card card-hover",
+        "card-hover group block overflow-hidden rounded-lg border bg-card",
         layout === "horizontal" ? "md:grid md:grid-cols-2" : "space-y-4",
         "paper-shadow",
-        className
+        className,
       )}
     >
       <div
         className={cn(
           "relative aspect-video overflow-hidden",
-          layout === "horizontal" && "md:aspect-auto md:h-full"
+          layout === "horizontal" && "md:aspect-auto md:h-full",
         )}
       >
         {media?.source_url ? (
           <Image
             src={media.source_url}
-            alt={post.title?.rendered || "文章配图"}
+            alt={post.title?.rendered || "No Image"}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
             fill
             priority
@@ -82,7 +82,7 @@ export function FeaturedPostCard({
           <h3
             className="mb-2 text-2xl font-medium transition-colors group-hover:text-primary"
             dangerouslySetInnerHTML={{
-              __html: post.title?.rendered || "无标题",
+              __html: post.title?.rendered || "Untitled",
             }}
           />
           <p
@@ -100,7 +100,7 @@ export function FeaturedPostCard({
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
-            <span>{readingTime} 分钟</span>
+            <span>{` ${readingTime} minute(s)`}</span>
           </div>
         </div>
       </div>

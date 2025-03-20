@@ -5,7 +5,7 @@ export async function CategoriesList() {
 
   return (
     <>
-      <option value="">全部分类</option>
+      <option value="">All categories</option>
       {categories.map((category) => (
         <option key={category.id} value={category.id}>
           {category.name}

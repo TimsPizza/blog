@@ -1,7 +1,11 @@
 "use client";
 
 import { Post } from "@/lib/wordpress.d";
-import { AnimatedSection, AnimatedList, AnimatedListItem } from "@/components/animations/animated-section";
+import {
+  AnimatedSection,
+  AnimatedList,
+  AnimatedListItem,
+} from "@/components/animations/animated-section";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableOfContents } from "./table-of-contents";
@@ -26,9 +30,9 @@ interface ArticleProps {
 export function ArticleView({ post, author, category, media }: ArticleProps) {
   const [copied, setCopied] = useState(false);
 
-  // 估算阅读时间（假设每分钟阅读300字）
+  // estimate reading time
   const readingTime = Math.ceil(
-    post.content.rendered.replace(/<[^>]*>/g, "").length / 300
+    post.content.rendered.replace(/<[^>]*>/g, "").length / 300,
   );
 
   // 格式化日期
@@ -62,7 +66,7 @@ export function ArticleView({ post, author, category, media }: ArticleProps) {
                 <h1
                   className="mb-4 text-4xl font-bold tracking-tight text-foreground"
                   dangerouslySetInnerHTML={{
-                    __html: post.title?.rendered || "无标题",
+                    __html: post.title?.rendered || "Untitled",
                   }}
                 />
                 <div className="flex flex-wrap items-center gap-4 text-sm">
@@ -77,7 +81,7 @@ export function ArticleView({ post, author, category, media }: ArticleProps) {
                   </div>
                   <div className="flex items-center gap-1 text-muted-foreground">
                     <Clock className="h-4 w-4" />
-                    <span>{readingTime} 分钟</span>
+                    <span>{` ${readingTime} minute(s)`}</span>
                   </div>
                   <Button
                     variant="ghost"
@@ -86,7 +90,7 @@ export function ArticleView({ post, author, category, media }: ArticleProps) {
                     className="ml-auto"
                   >
                     <Share2 className="mr-2 h-4 w-4" />
-                    {copied ? "已复制链接" : "分享"}
+                    {copied ? "Link copied" : "Share"}
                   </Button>
                 </div>
               </header>
@@ -94,10 +98,10 @@ export function ArticleView({ post, author, category, media }: ArticleProps) {
 
             {media?.source_url && (
               <AnimatedListItem>
-                <div className="aspect-video relative rounded-lg overflow-hidden">
+                <div className="relative aspect-video overflow-hidden rounded-lg">
                   <Image
                     src={media.source_url}
-                    alt={post.title?.rendered || "文章配图"}
+                    alt={post.title?.rendered || "No Image"}
                     className="object-cover"
                     fill
                     priority
