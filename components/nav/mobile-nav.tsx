@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 
-import { mainMenu, contentMenu } from "@/menu.config";
+import { mainMenu, contentMenu, footerMenu } from "@/menu.config";
 import { siteConfig } from "@/site.config";
 
 export function MobileNav() {
@@ -32,7 +32,7 @@ export function MobileNav() {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="px-0 border w-10 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+          className="w-10 border px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
         >
           <Menu />
           <span className="sr-only">Toggle Menu</span>
@@ -54,15 +54,21 @@ export function MobileNav() {
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="flex flex-col space-y-3">
             <h3 className="text-small mt-6">Menu</h3>
-            <Separator />
+            <Separator className="origin-left scale-x-75" />
             {Object.entries(mainMenu).map(([key, href]) => (
               <MobileLink key={key} href={href} onOpenChange={setOpen}>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </MobileLink>
             ))}
             <h3 className="text-small pt-6">Blog Menu</h3>
-            <Separator />
+            <Separator className="origin-left scale-x-75" />
             {Object.entries(contentMenu).map(([key, href]) => (
+              <MobileLink key={key} href={href} onOpenChange={setOpen}>
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </MobileLink>
+            ))}
+            <h3 className="text-small pt-6">External Links</h3>
+            {Object.entries(footerMenu).map(([key, href]) => (
               <MobileLink key={key} href={href} onOpenChange={setOpen}>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </MobileLink>

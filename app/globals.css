@@ -213,11 +213,19 @@
   .nav-item {
     @apply text-lg font-medium text-secondary-foreground hover:text-primary transition-colors relative;
   }
+
   .nav-item::before {
     @apply absolute w-full h-[1px] bg-primary/60 bottom-0 left-0 origin-left transform scale-x-0 transition-transform duration-300 ease-out;
     content: '';
   }
+
   .nav-item:hover::before {
     @apply transform scale-x-100;
+  }
+}
+
+@layer components {
+  .divider-tail {
+    @apply after:absolute after:h-full after:w-[1px] after:top-0 after:-right-2 after:bg-muted-foreground after:text-muted-foreground after:content-[""] after:scale-x-50 after:scale-y-75 ;
   }
 }

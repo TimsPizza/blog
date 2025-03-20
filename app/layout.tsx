@@ -7,10 +7,9 @@ import { Container, Section } from "@/components/craft";
 import { MobileNav } from "@/components/nav/mobile-nav";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { mainMenu } from "@/menu.config";
+import { footerMenu, mainMenu } from "@/menu.config";
 import { siteConfig } from "@/site.config";
 import { Analytics } from "@vercel/analytics/react";
-
 
 import Link from "next/link";
 
@@ -29,9 +28,8 @@ const font = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "WordPress & Next.js Starter by 9d8",
-  description:
-    "A starter template for Next.js with WordPress as a headless CMS.",
+  title: "tim's nest",
+  description: "tim's personal blog",
   metadataBase: new URL(siteConfig.site_domain),
   alternates: {
     canonical: "/",
@@ -48,7 +46,7 @@ export default function RootLayout({
       <head />
       <body
         className={cn(
-          "h-full min-h-screen w-full font-sans antialiased",
+          "min-h-screen w-full font-sans antialiased",
           font.variable,
           lxgw.variable,
         )}
@@ -59,9 +57,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex h-screen w-full flex-col">
+          <main className="flex min-h-screen w-full flex-col">
             <Nav className={`${lxgw.className} text-lg font-bold`} />
-            <div id="content-wrapper" className="flex-1 min-h-screen">
+            <div id="content-wrapper" className="min-h-screen flex-1">
               {children}
             </div>
             <Footer />
@@ -113,15 +111,26 @@ const Footer = () => {
   return (
     <footer>
       <Section>
-        <Container className="not-prose flex flex-col justify-between gap-6 border-t md:flex-row md:items-center md:gap-2 !py-2">
-          <ThemeToggle />
-          <div className="flex flex-col items-start justify-center gap-2">
-            <p className="text-muted-foreground">
-              &copy; <a href="https://github.com/TimsPizza">timspizza</a>.
-            </p>
-            <p className="text-muted-foreground">
-              2025-present
-            </p>
+        <Container className="not-prose flex flex-row justify-between gap-6 border-t !py-2 px-4 md:items-start md:gap-2">
+          <ThemeToggle className="ml-4 md:mr-auto" />
+          <div className="flex flex-row justify-center gap-4">
+            <div className="divider-tail relative hidden flex-col items-start justify-center gap-2 md:flex">
+              {Object.entries(footerMenu).map(([key, href]) => (
+                <NavItem
+                  key={href}
+                  className="font-sans font-normal text-muted-foreground"
+                  href={href}
+                  text={key}
+                />
+              ))}
+            </div>
+
+            <div className="flex flex-col items-start justify-center gap-2">
+              <p className="text-muted-foreground">
+                &copy; <a href="https://github.com/TimsPizza">timspizza</a>.
+              </p>
+              <p className="text-muted-foreground">2025-present</p>
+            </div>
           </div>
         </Container>
       </Section>

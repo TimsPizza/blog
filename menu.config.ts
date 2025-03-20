@@ -2,8 +2,6 @@
 export const mainMenu = {
   categories: "/posts/categories",
   articles: "/posts",
-  portfolio: "https://me.kixstar.xyz",
-  github: "https://github.com/TimsPizza",
 };
 
 export const contentMenu = {
