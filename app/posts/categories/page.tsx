@@ -3,6 +3,8 @@ import { Section, Container, Prose } from "@/components/craft";
 import { Metadata } from "next";
 import BackButton from "@/components/back";
 import Link from "next/link";
+import { CatIcon } from "lucide-react";
+import CatIconByName from "@/components/ui/cat-icon";
 
 export const metadata: Metadata = {
   title: "All Categories",
@@ -16,22 +18,28 @@ export default async function Page() {
   const categories = await getAllCategories();
 
   return (
-    <Section>
-      <Container className="space-y-6">
-        <Prose className="mb-8">
-          <h2>All Categories</h2>
-          <ul className="grid">
-            {categories.map((category: any) => (
-              <li key={category.id}>
-                <Link href={`/posts/?category=${category.id}`}>
-                  {category.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Prose>
-        <BackButton />
-      </Container>
-    </Section>
+    <section className="py-12">
+      <div className="mx-auto max-w-6xl px-4">
+        <h2 className="mb-8 text-2xl font-bold">Explore Topics</h2>
+
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {categories.map((topic, index) => (
+            <Link
+              key={index}
+              href={`/posts/?category=${topic.id}`}
+              className="group flex flex-col items-center rounded-lg border bg-card p-4 text-center transition-colors hover:border-primary/50 hover:bg-accent"
+            >
+              <div className="mb-3 rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary/20">
+                <CatIconByName category={topic.name} />
+              </div>
+              <h3 className="font-medium">{topic.name}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {`${topic.count} Article(s)`}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

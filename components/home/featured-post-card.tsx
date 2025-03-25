@@ -10,9 +10,6 @@ interface FeaturedPostCardProps {
   media?: {
     source_url: string;
   } | null;
-  author?: {
-    name: string;
-  } | null;
   category?: {
     name: string;
     id: number;
@@ -24,7 +21,6 @@ interface FeaturedPostCardProps {
 export function FeaturedPostCard({
   post,
   media,
-  author,
   category,
   className,
   layout = "vertical",

@@ -1,38 +1,58 @@
-import { Section, Container } from "@/components/craft";
+import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { siteConfig } from "@/site.config";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, Tag, TrendingUp } from "lucide-react";
 
 export function Hero() {
   return (
-    <Section className="relative h-full overflow-hidden">
-      <Container className="relative py-24 md:py-32">
-        <div className="mx-auto max-w-4xl">
-          <div className="space-y-8 text-center">
-            <h1 className="bg-clip-text text-3xl font-medium text-foreground sm:text-5xl md:text-6xl">
-              {siteConfig.site_name}
+    <div className="flex min-h-screen flex-col">
+      {/* Hero Section */}
+      <section className="mx-40 flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-4 py-12 md:py-20">
+        <div className="grid w-full grid-cols-1 items-center gap-12 md:grid-cols-2">
+          <div className="space-y-6 self-start">
+            <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
+              <Tag className="mr-2 h-4 w-4" />
+              <span>Tech | Essay | Learning</span>
+            </div>
+
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+              tim&apos;s nest
             </h1>
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              {siteConfig.site_description}
+
+            <p className="font-lxgw text-lg text-muted-foreground">
+              Hi, I'm Peisen (Tim), this is my personal blog and mind zone. I
+              share my thoughts, learning notes, and technical articles here.
+              Feel free to explore and learn with me!
             </p>
-            <div className="flex items-center justify-center gap-4 pt-4">
-              <Button size="lg" className="h-12 px-6" asChild>
-                <Link href="/posts">
-                  All Posts <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" className="h-12 px-6" variant="outline" asChild>
-                <Link href="/posts/categories">By Categories</Link>
-              </Button>
+
+            <div className="flex flex-wrap gap-3">
+              <Link
+                href="/posts"
+                className="inline-flex items-center rounded-md bg-primary px-4 py-2 text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                All Posts
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="/posts/categories"
+                className="inline-flex items-center rounded-md border border-input bg-background px-4 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                By Categories
+              </Link>
             </div>
           </div>
+
+          <div className="relative mx-auto aspect-square w-full max-w-md md:ml-auto">
+            <Image
+              src="/placeholder.svg?height=400&width=400"
+              alt="Blog illustration"
+              width={400}
+              height={400}
+              className="rounded-lg object-cover shadow-lg"
+              priority
+            />
+          </div>
         </div>
-      </Container>
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="bg-grid-pattern absolute inset-0 opacity-[0.02]" />
-        <div className="absolute inset-0" />
-      </div>
-    </Section>
+      </section>
+    </div>
   );
 }

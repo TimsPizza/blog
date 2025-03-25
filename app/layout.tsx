@@ -1,7 +1,11 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Inter as FontSans, LXGW_WenKai_TC } from "next/font/google";
+import {
+  Inter as FontSans,
+  LXGW_WenKai_TC,
+  Nunito_Sans,
+} from "next/font/google";
 
 import { Container, Section } from "@/components/craft";
 import { MobileNav } from "@/components/nav/mobile-nav";
@@ -20,6 +24,11 @@ const lxgw = LXGW_WenKai_TC({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-lxgw",
+});
+
+const nunito = Nunito_Sans({
+  subsets: ["latin"],
+  variable: "--font-nunito",
 });
 
 const font = FontSans({
@@ -49,6 +58,7 @@ export default function RootLayout({
           "min-h-screen w-full font-sans antialiased",
           font.variable,
           lxgw.variable,
+          nunito.variable,
         )}
       >
         <ThemeProvider
@@ -79,7 +89,7 @@ const Nav = ({ className, children, id }: NavProps) => {
     >
       <div
         id="nav-container"
-        className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 sm:px-8"
+        className="!mx-40 flex max-w-5xl items-center justify-between px-4 py-4 sm:px-4"
       >
         <Link
           className="flex items-center gap-4 transition-all hover:opacity-75"
@@ -118,7 +128,7 @@ const Footer = () => {
               {Object.entries(footerMenu).map(([key, href]) => (
                 <NavItem
                   key={href}
-                  className="font-sans font-normal text-muted-foreground"
+                  className="!font-light text-muted-foreground"
                   href={href}
                   text={key}
                 />

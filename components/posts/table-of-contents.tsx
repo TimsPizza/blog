@@ -15,7 +15,13 @@ function generateId(text: string): string {
   return text.toLowerCase().replace(/[^\w]+/g, "-");
 }
 
-export function TableOfContents({ content }: { content: string }) {
+export function TableOfContents({
+  content,
+  className,
+}: {
+  content: string;
+  className?: string;
+}) {
   const [activeId, setActiveId] = useState<string>("");
   const [headings, setHeadings] = useState<Heading[]>([]);
 
@@ -73,10 +79,14 @@ export function TableOfContents({ content }: { content: string }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
+      id="article-nav"
+      initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
-      className="fixed right-8 top-32 hidden w-64 rounded-lg border bg-card shadow-sm xl:block"
+      className={cn(
+        "fixed left-8 top-32 hidden w-64 bg-transparent xl:block",
+        className,
+      )}
     >
       <div className="border-b p-4">
         <h4 className="text-sm font-medium">Table of Contents</h4>
@@ -89,8 +99,18 @@ export function TableOfContents({ content }: { content: string }) {
               href={`#${heading.id}`}
               onClick={(e) => {
                 e.preventDefault();
+                const element = document.getElementById(heading.id);
+                if (element) {
+                  const offset = element.tagName === "h2" ? 80 : 40;
+                  const y =
+                    element.getBoundingClientRect().top +
+                    window.scrollY -
+                    offset;
+                  window.scrollTo({ top: y, behavior: "smooth" });
+                }
                 document.getElementById(heading.id)?.scrollIntoView({
                   behavior: "smooth",
+                  block: "start",
                 });
               }}
               className={cn(

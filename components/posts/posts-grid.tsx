@@ -48,7 +48,6 @@ export function PostsGrid({
             key={post.id}
             post={post}
             media={post._media}
-            author={post._author}
             category={post._category}
           />
         ))}

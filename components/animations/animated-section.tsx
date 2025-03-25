@@ -34,7 +34,7 @@ export function AnimatedSection({
 export function AnimatedList({
   children,
   className,
-  staggerDelay = 0.1,
+  staggerDelay = 0.2,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -49,7 +49,7 @@ export function AnimatedList({
         show: {
           opacity: 1,
           transition: {
-            duration: 0.2,
+            duration: 0.5,
             when: "beforeChildren",
             staggerChildren: staggerDelay,
           },

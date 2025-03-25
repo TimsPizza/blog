@@ -13,6 +13,7 @@ import { ReadingProgress } from "./reading-progress";
 import Image from "next/image";
 import { Calendar, Clock, Share2 } from "lucide-react";
 import { useState } from "react";
+import { Container } from "@/components/craft";
 
 interface ArticleProps {
   post: Post;
@@ -27,7 +28,7 @@ interface ArticleProps {
   } | null;
 }
 
-export function ArticleView({ post, author, category, media }: ArticleProps) {
+export function ArticleView({ post, category, media }: ArticleProps) {
   const [copied, setCopied] = useState(false);
 
   // estimate reading time
@@ -43,15 +44,17 @@ export function ArticleView({ post, author, category, media }: ArticleProps) {
   });
 
   const handleShare = async () => {
+    console.log("Sharing:", post.title.rendered);
     try {
       await navigator.share({
         title: post.title.rendered,
         url: window.location.href,
       });
-    } catch (err) {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.log("Error when trying to copy:", err);
     }
   };
 
@@ -59,8 +62,8 @@ export function ArticleView({ post, author, category, media }: ArticleProps) {
     <>
       <ReadingProgress />
       <div className="relative">
-        <article className="prose prose-lg mx-auto prose-headings:text-foreground/90 prose-p:text-foreground/80">
-          <AnimatedList className="mb-12 space-y-8">
+        <article className="prose prose-lg relative mx-auto prose-headings:text-foreground/90 prose-p:text-foreground/80">
+          <Container className="mb-12 space-y-8">
             <AnimatedListItem>
               <header className="not-prose">
                 <h1
@@ -118,7 +121,7 @@ export function ArticleView({ post, author, category, media }: ArticleProps) {
                 }}
               />
             </AnimatedListItem>
-          </AnimatedList>
+          </Container>
         </article>
 
         <TableOfContents content={post.content?.rendered || ""} />

@@ -311,6 +311,7 @@ export async function getAllAuthors(): Promise<Author[]> {
 
 export async function getAuthorById(id: number): Promise<Author> {
   const url = getUrl(`/wp-json/wp/v2/users/${id}`);
+
   const response = await wordpressFetch<Author>(url, {
     next: {
       ...defaultFetchOptions.next,

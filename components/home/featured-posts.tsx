@@ -6,43 +6,78 @@ import {
   getCategoryById,
   getAllPosts,
 } from "@/lib/wordpress";
+import Link from "next/link";
+import { ArrowRight, BookOpen, Clock } from "lucide-react";
+import Image from "next/image";
 
 export async function FeaturedPosts() {
   // 获取最新的文章并只使用前4篇
   const posts = (await getAllPosts()).slice(0, 4);
+  const medias = await Promise.all(
+    posts.map((post) => {
+      try {
+        getFeaturedMediaById(post.featured_media);
+      } catch (e) {
+        return { source_url: null };
+      }
+    }),
+  );
 
   return (
-    <Section>
-      <Container>
-        <div className="mb-8 flex items-baseline justify-between">
-          <h2 className="text-2xl font-medium sm:text-3xl">Most Recent</h2>
+    <Section className="bg-muted/50 py-12">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Featured</h2>
+          <Link
+            href="/posts"
+            className="inline-flex items-center text-primary hover:underline"
+          >
+            View All
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </Link>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {posts.map(async (post, index) => {
-            const media = post.featured_media
-              ? await getFeaturedMediaById(post.featured_media)
-              : null;
-            const author = post.author
-              ? await getAuthorById(post.author)
-              : null;
-            const category = post.categories?.[0]
-              ? await getCategoryById(post.categories[0])
-              : null;
 
-            return (
-              <FeaturedPostCard
-                key={post.id}
-                post={post}
-                media={media}
-                author={author}
-                category={category}
-                layout={index === 0 ? "horizontal" : "vertical"}
-                className={index === 0 ? "sm:col-span-2" : ""}
-              />
-            );
-          })}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post, index) => (
+            <article
+              key={index}
+              className="overflow-hidden rounded-lg border bg-card shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div className="relative h-48">
+                <Image
+                  src={medias[index]?.source_url || "/placeholder.svg"}
+                  alt={"No Image"}
+                  fill
+                  className="m-auto object-cover"
+                />
+              </div>
+              <div className="space-y-3 p-5">
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <span className="inline-flex items-center">
+                    <Clock className="mr-1 h-4 w-4" />
+                    {post.date}
+                  </span>
+                  <span className="mx-2">•</span>
+                </div>
+                <h3 className="line-clamp-2 text-lg font-semibold">
+                  {post.title.rendered}
+                </h3>
+                <p className="line-clamp-2 text-muted-foreground">
+                  {post.excerpt?.rendered.replace(/<[^>]*>/g, "") ||
+                    "No Excerpt"}
+                </p>
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="inline-flex items-center pt-2 text-primary hover:underline"
+                >
+                  Read More
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
-      </Container>
+      </div>
     </Section>
   );
 }

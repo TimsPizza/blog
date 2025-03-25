@@ -22,6 +22,7 @@ const config = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         lxgw: ["var(--font-lxgw)", ...fontFamily.sans],
+        nunito: ["var(--font-nunito)", ...fontFamily.sans],
       },
       colors: {
         border: "hsl(var(--border))",

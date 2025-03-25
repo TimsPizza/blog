@@ -30,11 +30,9 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostBySlug(params.slug);
-
   const media = post.featured_media
     ? await getFeaturedMediaById(post.featured_media)
     : null;
-  const author = post.author ? await getAuthorById(post.author) : null;
   const category = post.categories?.[0]
     ? await getCategoryById(post.categories[0])
     : null;
@@ -46,7 +44,6 @@ export default async function PostPage({ params }: PostPageProps) {
           <ArticleView
             post={post}
             media={media}
-            author={author}
             category={category}
           />
         </Suspense>
