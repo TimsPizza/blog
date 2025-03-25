@@ -27,15 +27,13 @@ export default async function Page() {
             <Link
               key={index}
               href={`/posts/?category=${topic.id}`}
-              className="group flex flex-col items-center rounded-lg border bg-card p-4 text-center transition-colors hover:border-primary/50 hover:bg-accent"
+              className="group flex flex-col items-center rounded-lg border bg-card p-4 text-center transition-colors hover:border-primary/50 hover:bg-accent hover:!text-accent-foreground"
             >
-              <div className="mb-3 rounded-full bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary/20">
+              <div className="mb-3 rounded-full bg-primary/10 p-3 text-inherit group-hover:bg-gray-400/20">
                 <CatIconByName category={topic.name} />
               </div>
               <h3 className="font-medium">{topic.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {`${topic.count} Article(s)`}
-              </p>
+              <p className="mt-1 text-sm">{`${topic.count} Article(s)`}</p>
             </Link>
           ))}
         </div>

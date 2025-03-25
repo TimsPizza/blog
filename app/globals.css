@@ -33,6 +33,19 @@
     --ring: 25 39% 44%;
 
     --radius: 0.5rem;
+    --shadow-color: 220 3% 15%;
+    --shadow-strength: 1%;
+
+    --shadow-xs: 0 1px 2px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
+    --shadow-sm: 0 1px 3px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 10%)),
+      0 1px 2px -1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
+    --shadow: 0 4px 6px -1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 8%)),
+      0 2px 4px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 8%));
+    --shadow-md: 0 10px 15px -3px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%)),
+      0 4px 6px -4px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 8%));
+    --shadow-lg: 0 20px 25px -5px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 6%)),
+      0 8px 10px -6px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
+    --shadow-xl: 0 25px 50px -12px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 25%));
   }
 
   .dark {
@@ -63,6 +76,19 @@
     --border: 20 10% 25%;
     --input: 20 10% 25%;
     --ring: 25 39% 44%;
+    --shadow-color: 220 40% 2%;
+    --shadow-strength: 4%;
+
+    --shadow-xs: 0 1px 2px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
+    --shadow-sm: 0 1px 3px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 11%)),
+      0 1px 2px -1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 10%));
+    --shadow: 0 4px 6px -1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 14%)),
+      0 2px 4px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 12%));
+    --shadow-md: 0 10px 15px -3px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 16%)),
+      0 4px 6px -4px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 13%));
+    --shadow-lg: 0 20px 25px -5px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 18%)),
+      0 8px 10px -6px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 16%));
+    --shadow-xl: 0 25px 50px -12px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 35%));
   }
 }
 
@@ -226,6 +252,6 @@
 
 @layer components {
   .divider-tail {
-    @apply after:absolute after:h-full after:w-[1px] after:top-0 after:-right-2 after:bg-muted-foreground after:text-muted-foreground after:content-[""] after:scale-x-50 after:scale-y-75 ;
+    @apply after:absolute after:h-full after:w-[1px] after:top-0 after:-right-2 after:bg-muted-foreground after:text-muted-foreground after:content-[""] after:scale-x-50 after:scale-y-75;
   }
 }

@@ -43,7 +43,7 @@ export function Hero() {
 
           <div className="relative mx-auto aspect-square w-full max-w-md md:ml-auto">
             <Image
-              src="/placeholder.svg?height=400&width=400"
+              src="/hero.png"
               alt="Blog illustration"
               width={400}
               height={400}

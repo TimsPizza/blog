@@ -15,6 +15,15 @@ function generateId(text: string): string {
   return text.toLowerCase().replace(/[^\w]+/g, "-");
 }
 
+function extractNumber(text: string): number {
+  const match = text.match(/\d+/);
+  return match ? parseInt(match[0]) : 0;
+}
+
+function extractText(text: string): string {
+  return text.replace(/\d+\. /, "");
+}
+
 export function TableOfContents({
   content,
   className,
@@ -114,14 +123,17 @@ export function TableOfContents({
                 });
               }}
               className={cn(
-                "block py-1 text-sm transition-colors hover:text-foreground",
+                "inline-block py-1 text-sm transition-colors hover:text-foreground",
                 heading.level === "3" ? "pl-4" : "",
                 activeId === heading.id
                   ? "font-medium text-primary"
                   : "text-muted-foreground",
               )}
             >
-              {heading.text}
+              <div className="flex flex-row items-start justify-center">
+                <span className="min-w-6 h-full">{`${extractNumber(heading.text)}.`}</span>
+                <span className="ml-1">{extractText(heading.text)}</span>
+              </div>
             </a>
           ))}
         </nav>

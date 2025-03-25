@@ -86,7 +86,8 @@ export function ArticleView({ post, category, media }: ArticleProps) {
                     <Clock className="h-4 w-4" />
                     <span>{` ${readingTime} minute(s)`}</span>
                   </div>
-                  <Button
+                  {/* <Button
+                    id="share-button"
                     variant="ghost"
                     size="sm"
                     onClick={handleShare}
@@ -94,7 +95,7 @@ export function ArticleView({ post, category, media }: ArticleProps) {
                   >
                     <Share2 className="mr-2 h-4 w-4" />
                     {copied ? "Link copied" : "Share"}
-                  </Button>
+                  </Button> */}
                 </div>
               </header>
             </AnimatedListItem>
