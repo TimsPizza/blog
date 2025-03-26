@@ -9,15 +9,11 @@ import {
 import { Metadata } from "next";
 import { Suspense } from "react";
 
-interface PostPageProps {
-  params: {
-    slug: string;
-  };
-}
-
 export async function generateMetadata({
   params,
-}: PostPageProps): Promise<Metadata> {
+}: {
+  params: any;
+}): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
   return {
@@ -26,7 +22,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function PostPage({ params }: PostPageProps) {
+export default async function PostPage({ params }: { params: any }) {
   const post = await getPostBySlug(params.slug);
   const media = post.featured_media
     ? await getFeaturedMediaById(post.featured_media)

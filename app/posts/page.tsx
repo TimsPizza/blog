@@ -9,19 +9,12 @@ export const metadata: Metadata = {
   description: "A collection of all articles on the site.",
 };
 
-interface SearchParams {
-  search?: string;
-  category?: string;
-  page?: string;
-  sort?: string;
-}
-
 const POSTS_PER_PAGE = 12;
 
 export default async function PostsPage({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: any;
 }) {
   const page = parseInt(searchParams.page || "1");
   const search = searchParams.search || "";

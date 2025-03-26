@@ -12,7 +12,6 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const isFirstMount = useRef(true);
 
-  console.log("PageTransition render");
   useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
