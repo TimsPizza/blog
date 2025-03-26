@@ -1,27 +1,27 @@
 "use client";
 
 // React and Next Imports
-import * as React from "react";
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
+import * as React from "react";
 
 // Utility Imports
-import { Menu, ArrowRightSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ArrowRightSquare, Menu } from "lucide-react";
 
 // Component Imports
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
-  SheetTitle,
   SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
 
-import { mainMenu, contentMenu, footerMenu } from "@/menu.config";
+import { footerMenu, mainMenu } from "@/menu.config";
 import { siteConfig } from "@/site.config";
 
 export function MobileNav() {
@@ -60,13 +60,6 @@ export function MobileNav() {
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </MobileLink>
             ))}
-            {/* <h3 className="text-small pt-6">Blog Menu</h3>
-            <Separator className="origin-left scale-x-75" />
-            {Object.entries(contentMenu).map(([key, href]) => (
-              <MobileLink key={key} href={href} onOpenChange={setOpen}>
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-              </MobileLink>
-              ))} */}
             <h3 className="text-small pt-6">External Links</h3>
             <Separator className="origin-left scale-x-75" />
             {Object.entries(footerMenu).map(([key, href]) => (

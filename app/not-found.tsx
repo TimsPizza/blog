@@ -7,8 +7,8 @@ export default function NotFound() {
   return (
     <Section>
       <Container>
-        <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
-          <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
+        <div className="flex min-h-[50vh] flex-col items-center justify-center text-center">
+          <h1 className="mb-4 text-4xl font-bold">404 - Page Not Found</h1>
           <p className="mb-8">
             Ooops you seem to be lost. Let's get you back on track.
           </p>

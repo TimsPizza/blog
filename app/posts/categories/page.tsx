@@ -1,10 +1,7 @@
-import { getAllCategories } from "@/lib/wordpress";
-import { Section, Container, Prose } from "@/components/craft";
-import { Metadata } from "next";
-import BackButton from "@/components/back";
-import Link from "next/link";
-import { CatIcon } from "lucide-react";
 import CatIconByName from "@/components/ui/cat-icon";
+import { getAllCategories } from "@/lib/wordpress";
+import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "All Categories",

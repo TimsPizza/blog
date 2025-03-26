@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { RefObject, useEffect, useRef } from "react";
 
 interface ReadingProgressProps {
   articleRef: RefObject<HTMLDivElement>;

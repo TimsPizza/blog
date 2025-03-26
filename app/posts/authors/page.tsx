@@ -1,7 +1,7 @@
-import { getAllAuthors } from "@/lib/wordpress";
-import { Section, Container, Prose } from "@/components/craft";
-import { Metadata } from "next";
 import BackButton from "@/components/back";
+import { Container, Prose, Section } from "@/components/craft";
+import { getAllAuthors } from "@/lib/wordpress";
+import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {

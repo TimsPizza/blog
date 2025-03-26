@@ -61,4 +61,4 @@ function CardSkeleton() {
   );
 }
 
-export { Skeleton, ArticleSkeleton, CardSkeleton };
+export { ArticleSkeleton, CardSkeleton, Skeleton };

@@ -1,7 +1,7 @@
-import { Section, Container } from "@/components/craft";
-import { SearchFilter } from "@/components/posts/search-filter";
+import { Container, Section } from "@/components/craft";
 import { PostsGrid } from "@/components/posts/posts-grid";
-import { getAllPosts, getAllCategories } from "@/lib/wordpress";
+import { SearchFilter } from "@/components/posts/search-filter";
+import { getAllCategories, getAllPosts } from "@/lib/wordpress";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,19 +23,16 @@ export default async function PostsPage({
 }: {
   searchParams: SearchParams;
 }) {
-  
   const page = parseInt(searchParams.page || "1");
   const search = searchParams.search || "";
   const category = searchParams.category;
   const sort = searchParams.sort || "date";
 
-  
   const categories = await getAllCategories();
 
-  
   const queryParams = (() => {
     if (!search && !category) return undefined;
-    
+
     const params: {
       search?: string;
       category?: number;
@@ -44,7 +41,7 @@ export default async function PostsPage({
     if (search && search.trim() !== "") {
       params.search = search;
     }
-    
+
     if (category) {
       const categoryId = parseInt(category);
       if (!isNaN(categoryId)) {
@@ -57,7 +54,6 @@ export default async function PostsPage({
 
   const allPosts = await getAllPosts(queryParams);
 
-  
   const sortedPosts = [...allPosts].sort((a, b) => {
     switch (sort) {
       case "date-asc":
@@ -78,7 +74,6 @@ export default async function PostsPage({
     }
   });
 
-  
   const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
   const currentPage = Math.min(Math.max(1, page), totalPages);
   const paginatedPosts = sortedPosts.slice(
@@ -90,7 +85,9 @@ export default async function PostsPage({
     <Section>
       <Container className="space-y-8">
         <div>
-          <h1 className="mb-8 text-3xl font-medium text-foreground/90 tracking-tight sm:text-4xl">Articles</h1>
+          <h1 className="mb-8 text-3xl font-medium tracking-tight text-foreground/90 sm:text-4xl">
+            Articles
+          </h1>
           <SearchFilter categories={categories} />
         </div>
 

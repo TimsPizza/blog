@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
 export function SearchInput({ defaultValue }: { defaultValue?: string }) {

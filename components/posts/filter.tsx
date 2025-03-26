@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button"; // Add this import for the Button component
 import {
   Select,
   SelectContent,
@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"; // Ensure this is the correct import path
-import { Button } from "@/components/ui/button"; // Add this import for the Button component
+import { useRouter } from "next/navigation";
 
 interface Author {
   id: number;
@@ -60,7 +60,7 @@ export function FilterPosts({
   };
 
   return (
-    <div className="grid md:grid-cols-[1fr_1fr_1fr_0.5fr] gap-2 my-4 !z-10">
+    <div className="!z-10 my-4 grid gap-2 md:grid-cols-[1fr_1fr_1fr_0.5fr]">
       <Select
         value={selectedTag || "all"}
         onValueChange={(value) => handleFilterChange("tag", value)}

@@ -1,12 +1,6 @@
 "use client";
 import { FeaturedPostCard } from "@/components/home/featured-post-card";
 import { Pagination } from "@/components/ui/pagination";
-import {
-  getFeaturedMediaById,
-  getAuthorById,
-  getCategoryById,
-  getAllPosts,
-} from "@/lib/wordpress";
 import { Post } from "@/lib/wordpress.d";
 
 interface PostsGridProps {
@@ -14,7 +8,6 @@ interface PostsGridProps {
   currentPage: number;
   totalPages: number;
 }
-
 
 interface MediaType {
   source_url: string;
@@ -35,11 +28,7 @@ interface ExtendedPost extends Post {
   _category?: CategoryType;
 }
 
-export function PostsGrid({
-  posts,
-  currentPage,
-  totalPages,
-}: PostsGridProps) {
+export function PostsGrid({ posts, currentPage, totalPages }: PostsGridProps) {
   return (
     <div className="space-y-8">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -52,7 +41,7 @@ export function PostsGrid({
           />
         ))}
       </div>
-      
+
       {totalPages > 1 && (
         <Pagination currentPage={currentPage} totalPages={totalPages} />
       )}

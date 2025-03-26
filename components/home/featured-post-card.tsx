@@ -1,9 +1,9 @@
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { Post } from "@/lib/wordpress.d";
+import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock } from "lucide-react";
 
 interface FeaturedPostCardProps {
   post: Post;

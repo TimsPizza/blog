@@ -1,8 +1,7 @@
 import { TrendingUpIcon } from "lucide-react";
-import React from "react";
-import { FiBookOpen, FiDatabase, FiTrendingUp } from "react-icons/fi";
 import { FaBicycle, FaCode, FaReact, FaTools } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FiBookOpen, FiDatabase } from "react-icons/fi";
 export function getCategoryLogoByName(category: string, className?: string) {
   const overallClassName = `h-5 w-5 ${className}`;
   switch (category) {

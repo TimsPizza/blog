@@ -1,13 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Post } from "@/lib/wordpress.d";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
-  getFeaturedMediaById,
   getAuthorById,
   getCategoryById,
+  getFeaturedMediaById,
 } from "@/lib/wordpress";
-import { Badge } from "@/components/ui/badge";
+import { Post } from "@/lib/wordpress.d";
+import Image from "next/image";
+import Link from "next/link";
 
 export async function PostCard({ post }: { post: Post }) {
   const media = post.featured_media
@@ -29,7 +29,7 @@ export async function PostCard({ post }: { post: Post }) {
       className={cn(
         "group flex flex-col justify-between gap-8 rounded-lg border",
         "bg-card p-4 text-card-foreground shadow-sm transition-all",
-        "hover:bg-accent/5 hover:shadow-md"
+        "hover:bg-accent/5 hover:shadow-md",
       )}
     >
       <div className="flex flex-col gap-4">
@@ -59,8 +59,11 @@ export async function PostCard({ post }: { post: Post }) {
             className="text-sm text-muted-foreground"
             dangerouslySetInnerHTML={{
               __html: post.excerpt?.rendered
-                ? post.excerpt.rendered.split(" ").slice(0, 12).join(" ").trim() +
-                  "..."
+                ? post.excerpt.rendered
+                    .split(" ")
+                    .slice(0, 12)
+                    .join(" ")
+                    .trim() + "..."
                 : "No excerpt available",
             }}
           />

@@ -1,13 +1,12 @@
+import { Container, Section } from "@/components/craft";
 import { ArticleView } from "@/components/posts/article-view";
 import { ArticleSkeleton } from "@/components/ui/skeleton";
-import { Section, Container } from "@/components/craft";
-import { Metadata } from "next";
 import {
-  getPostBySlug,
-  getFeaturedMediaById,
-  getAuthorById,
   getCategoryById,
+  getFeaturedMediaById,
+  getPostBySlug,
 } from "@/lib/wordpress";
+import { Metadata } from "next";
 import { Suspense } from "react";
 
 interface PostPageProps {
@@ -15,7 +14,6 @@ interface PostPageProps {
     slug: string;
   };
 }
-
 
 export async function generateMetadata({
   params,
@@ -41,11 +39,7 @@ export default async function PostPage({ params }: PostPageProps) {
     <Section>
       <Container className="max-w-4xl">
         <Suspense fallback={<ArticleSkeleton />}>
-          <ArticleView
-            post={post}
-            media={media}
-            category={category}
-          />
+          <ArticleView post={post} media={media} category={category} />
         </Suspense>
       </Container>
     </Section>

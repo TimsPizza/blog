@@ -9,9 +9,7 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ className, href, text }) => {
   return (
     <div id="nav-item" className={`nav-item ${className}`}>
-      <a href={href}>
-        {text}
-      </a>
+      <a href={href}>{text}</a>
     </div>
   );
 };

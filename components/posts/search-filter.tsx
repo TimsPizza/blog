@@ -1,11 +1,11 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Filter } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Category } from "@/lib/wordpress.d";
+import { Filter, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
-import { Category } from "@/lib/wordpress.d";
 
 interface SearchFilterProps {
   categories: Category[];

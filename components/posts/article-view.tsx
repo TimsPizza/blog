@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Post } from "@/lib/wordpress.d";
 import { Calendar, Clock } from "lucide-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { ReadingProgress } from "./reading-progress";
 import { TableOfContents } from "./table-of-contents";
 

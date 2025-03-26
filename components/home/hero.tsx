@@ -1,12 +1,12 @@
+import { ArrowRight, Tag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock, Tag, TrendingUp } from "lucide-react";
 
 export function Hero() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       {/* Hero Section */}
-      <section className="lg:mx-40 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-4 py-12 md:py-20">
+      <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-4 py-12 md:py-20 lg:mx-40">
         <div className="grid w-full grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div className="space-y-6 self-start">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">

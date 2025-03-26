@@ -1,14 +1,10 @@
-import { Section, Container } from "@/components/craft";
-import { FeaturedPostCard } from "./featured-post-card";
+import { Section } from "@/components/craft";
 import {
-  getFeaturedMediaById,
-  getAuthorById,
-  getCategoryById,
   getAllPosts,
+  getFeaturedMediaById
 } from "@/lib/wordpress";
+import { ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock } from "lucide-react";
-import Image from "next/image";
 
 export async function FeaturedPosts() {
   const posts = (await getAllPosts()).slice(0, 4);

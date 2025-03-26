@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
 import gsap from "gsap";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useRef } from "react";
 
 interface PageTransitionProps {
   children: React.ReactNode;

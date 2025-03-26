@@ -21,23 +21,18 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <Button
-        variant="outline"
-        size="icon"
-        asChild
-        disabled={currentPage <= 1}
-      >
+      <Button variant="outline" size="icon" asChild disabled={currentPage <= 1}>
         <Link href={createPageUrl(currentPage - 1)} scroll={false}>
           <ChevronLeft className="h-4 w-4" />
         </Link>
       </Button>
-      
+
       <div className="flex items-center gap-1">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
           const isActive = page === currentPage;
-          const isEllipsis = 
-            page !== 1 && 
-            page !== totalPages && 
+          const isEllipsis =
+            page !== 1 &&
+            page !== totalPages &&
             (page < currentPage - 1 || page > currentPage + 1);
 
           if (isEllipsis) {
