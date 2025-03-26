@@ -23,6 +23,7 @@ export function ReadingProgress({ articleRef }: ReadingProgressProps) {
         trigger: articleRef.current,
         start: "top top",
         end: "bottom bottom",
+        scrub: true,
         invalidateOnRefresh: true,
       },
     });
