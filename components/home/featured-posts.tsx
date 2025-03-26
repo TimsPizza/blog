@@ -42,22 +42,7 @@ export async function FeaturedPosts() {
               key={index}
               className="overflow-hidden rounded-lg border bg-card shadow-sm transition-shadow hover:shadow-md"
             >
-              <div className="relative h-48">
-                <Image
-                  src={medias[index]?.source_url || "/placeholder.svg"}
-                  alt={"No Image"}
-                  fill
-                  className="m-auto object-cover"
-                />
-              </div>
               <div className="space-y-3 p-5">
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <span className="inline-flex items-center">
-                    <Clock className="mr-1 h-4 w-4" />
-                    {post.date}
-                  </span>
-                  <span className="mx-2">•</span>
-                </div>
                 <h3 className="line-clamp-2 text-lg font-semibold">
                   {post.title.rendered}
                 </h3>
@@ -65,6 +50,13 @@ export async function FeaturedPosts() {
                   {post.excerpt?.rendered.replace(/<[^>]*>/g, "") ||
                     "No Excerpt"}
                 </p>
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <span className="inline-flex items-center">
+                    <Clock className="mr-1 h-4 w-4" />
+                    {post.date}
+                  </span>
+                  <span className="mx-2">•</span>
+                </div>
                 <Link
                   href={`/posts/${post.slug}`}
                   className="inline-flex items-center pt-2 text-primary hover:underline"

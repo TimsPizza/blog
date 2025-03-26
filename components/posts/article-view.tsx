@@ -47,7 +47,7 @@ export function ArticleView({ post, category, media }: ArticleProps) {
   return (
     <>
       <ReadingProgress articleRef={articleRef} />
-      <div ref={articleRef} className="relative">
+      <div ref={articleRef} className="relative ">
         <article className="prose prose-lg relative mx-auto prose-headings:text-foreground/90 prose-p:text-foreground/80">
           <Container className="mb-12 space-y-8">
             <AnimatedListItem>

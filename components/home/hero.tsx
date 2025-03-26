@@ -4,7 +4,7 @@ import { ArrowRight, BookOpen, Clock, Tag, TrendingUp } from "lucide-react";
 
 export function Hero() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col items-center justify-center">
       {/* Hero Section */}
       <section className="lg:mx-40 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-4 py-12 md:py-20">
         <div className="grid w-full grid-cols-1 items-center gap-12 md:grid-cols-2">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -33,6 +33,8 @@ export function TableOfContents({
 }) {
   const [activeId, setActiveId] = useState<string>("");
   const [headings, setHeadings] = useState<Heading[]>([]);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const isScrollingRef = useRef(false);
 
   // 提取标题并处理内容
   useEffect(() => {
@@ -59,32 +61,71 @@ export function TableOfContents({
     }
   }, [content]);
 
-  // listen for scroll events and update active heading id
-  useEffect(() => {
-    const observer = new IntersectionObserver(
+  // 设置 Intersection Observer
+  const setupObserver = () => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    observerRef.current = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
+        if (isScrollingRef.current) return;
+
+        // 找到最接近视口顶部的可见标题
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+        if (visibleEntries.length > 0) {
+          const sorted = visibleEntries.sort((a, b) => {
+            const aDistance = Math.abs(a.boundingClientRect.top);
+            const bDistance = Math.abs(b.boundingClientRect.top);
+            return aDistance - bDistance;
+          });
+          setActiveId(sorted[0].target.id);
+        }
       },
       {
-        rootMargin: "-20% 0% -35% 0%",
+        rootMargin: "-10% 0% -80% 0%",
+        threshold: [0, 1],
       },
     );
 
     headings.forEach(({ id }) => {
       const element = document.getElementById(id);
       if (element) {
-        observer.observe(element);
+        observerRef.current?.observe(element);
       }
     });
+  };
 
-    return () => observer.disconnect();
+  // 监听滚动事件并更新活动标题
+  useEffect(() => {
+    setupObserver();
+    return () => observerRef.current?.disconnect();
   }, [headings]);
 
   if (headings.length === 0) return null;
+
+  const handleHeadingClick = (heading: Heading) => {
+    const element = document.getElementById(heading.id);
+    if (!element) return;
+
+    // temporarily disable observer
+    isScrollingRef.current = true;
+    setActiveId(heading.id);
+
+    // calc offset
+    const offset = heading.level === "2" ? 80 : 60;
+    const y = element.getBoundingClientRect().top + window.scrollY - offset;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
+
+    // enable overlay after 1s
+    setTimeout(() => {
+      isScrollingRef.current = false;
+    }, 1000); // wait for scroll animation to finish
+  };
 
   return (
     <motion.div
@@ -108,19 +149,7 @@ export function TableOfContents({
               href={`#${heading.id}`}
               onClick={(e) => {
                 e.preventDefault();
-                const element = document.getElementById(heading.id);
-                if (element) {
-                  const offset = element.tagName === "h2" ? 80 : 40;
-                  const y =
-                    element.getBoundingClientRect().top +
-                    window.scrollY -
-                    offset;
-                  window.scrollTo({ top: y, behavior: "smooth" });
-                }
-                document.getElementById(heading.id)?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
+                handleHeadingClick(heading);
               }}
               className={cn(
                 "inline-block py-1 text-sm transition-colors hover:text-foreground",
