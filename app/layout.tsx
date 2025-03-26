@@ -124,11 +124,11 @@ const Footer = () => {
         <Container className="not-prose flex flex-row justify-between gap-6 border-t !py-2 px-4 md:items-start md:gap-2">
           <ThemeToggle className="ml-4 md:mr-auto" />
           <div className="flex flex-row justify-center gap-4">
-            <div className="divider-tail relative hidden flex-col items-start justify-center gap-2 md:flex">
+            <div className="divider-tail relative hidden flex-col items-start justify-center gap-1 md:flex">
               {Object.entries(footerMenu).map(([key, href]) => (
                 <NavItem
                   key={href}
-                  className="!font-light text-muted-foreground"
+                  className="!text-[16px] !font-light text-muted-foreground"
                   href={href}
                   text={key}
                 />

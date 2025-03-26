@@ -7,5 +7,5 @@ type SiteConfig = {
 export const siteConfig: SiteConfig = {
   site_name: "tim's nest",
   site_description: "You're in the right place! I post my blogs here.",
-  site_domain: "https://next-wp.com",
+  site_domain: "https://blog.kixstar.xyz",
 };
