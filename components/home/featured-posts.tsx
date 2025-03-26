@@ -11,7 +11,6 @@ import { ArrowRight, BookOpen, Clock } from "lucide-react";
 import Image from "next/image";
 
 export async function FeaturedPosts() {
-  // 获取最新的文章并只使用前4篇
   const posts = (await getAllPosts()).slice(0, 4);
   const medias = await Promise.all(
     posts.map((post) => {

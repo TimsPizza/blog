@@ -26,31 +26,31 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
 
       const tl = gsap.timeline();
       
-      // 确保动画从 opacity: 0 开始
+      : 0 开始
       gsap.set(element, { opacity: 0 });
 
-      // 简单的淡入动画
+      
       tl.to(element, {
         opacity: 1,
         duration: 1,
         ease: "power2.out",
-        clearProps: "opacity" // 动画结束后清除样式
+        clearProps: "opacity" 
       });
     }, element);
 
-    return () => ctx.revert(); // 清理动画上下文
-  }, [location]); // 只在路径变化时触发
+    return () => ctx.revert(); 
+  }, [location]); 
 
   return (
     <div
       ref={elementRef}
       className="h-full w-full"
-      style={{ opacity: 0 }} // 初始状态设为透明
+      style={{ opacity: 0 }} 
     >
       {children}
     </div>
   );
 };
 
-// 使用 memo 优化性能
+
 export default React.memo(PageTransition);

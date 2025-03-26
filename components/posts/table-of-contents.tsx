@@ -46,7 +46,7 @@ export function TableOfContents({
 
     setHeadings(extracted);
 
-    // 为文章中的标题添加 id
+    // add ids to headings
     const article = document.querySelector("article");
     if (article) {
       article.innerHTML = article.innerHTML.replace(
@@ -59,7 +59,7 @@ export function TableOfContents({
     }
   }, [content]);
 
-  // 监听滚动以更新活动标题
+  // listen for scroll events and update active heading id
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -131,7 +131,7 @@ export function TableOfContents({
               )}
             >
               <div className="flex flex-row items-start justify-center">
-                <span className="min-w-6 h-full">{`${extractNumber(heading.text)}.`}</span>
+                <span className="h-full min-w-6">{`${extractNumber(heading.text)}.`}</span>
                 <span className="ml-1">{extractText(heading.text)}</span>
               </div>
             </a>

@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="mx-40 flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-4 py-12 md:py-20">
+      <section className="lg:mx-40 mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-4 py-12 md:py-20">
         <div className="grid w-full grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div className="space-y-6 self-start">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">

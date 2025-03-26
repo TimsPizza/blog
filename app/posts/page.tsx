@@ -23,16 +23,16 @@ export default async function PostsPage({
 }: {
   searchParams: SearchParams;
 }) {
-  // 获取查询参数
+  
   const page = parseInt(searchParams.page || "1");
   const search = searchParams.search || "";
   const category = searchParams.category;
   const sort = searchParams.sort || "date";
 
-  // 获取所有类别
+  
   const categories = await getAllCategories();
 
-  // 构建查询条件
+  
   const queryParams = (() => {
     if (!search && !category) return undefined;
     
@@ -57,7 +57,7 @@ export default async function PostsPage({
 
   const allPosts = await getAllPosts(queryParams);
 
-  // 根据排序参数排序
+  
   const sortedPosts = [...allPosts].sort((a, b) => {
     switch (sort) {
       case "date-asc":
@@ -78,7 +78,7 @@ export default async function PostsPage({
     }
   });
 
-  // 分页
+  
   const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
   const currentPage = Math.min(Math.max(1, page), totalPages);
   const paginatedPosts = sortedPosts.slice(

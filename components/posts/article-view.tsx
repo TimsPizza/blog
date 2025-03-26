@@ -1,6 +1,7 @@
 "use client";
 
 import { Post } from "@/lib/wordpress.d";
+import { useRef } from "react";
 import {
   AnimatedSection,
   AnimatedList,
@@ -30,38 +31,23 @@ interface ArticleProps {
 
 export function ArticleView({ post, category, media }: ArticleProps) {
   const [copied, setCopied] = useState(false);
+  const articleRef = useRef<HTMLDivElement>(null);
 
   // estimate reading time
   const readingTime = Math.ceil(
     post.content.rendered.replace(/<[^>]*>/g, "").length / 300,
   );
 
-  // 格式化日期
   const date = new Date(post.date).toLocaleDateString("zh-CN", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-  const handleShare = async () => {
-    console.log("Sharing:", post.title.rendered);
-    try {
-      await navigator.share({
-        title: post.title.rendered,
-        url: window.location.href,
-      });
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.log("Error when trying to copy:", err);
-    }
-  };
-
   return (
     <>
-      <ReadingProgress />
-      <div className="relative">
+      <ReadingProgress articleRef={articleRef} />
+      <div ref={articleRef} className="relative">
         <article className="prose prose-lg relative mx-auto prose-headings:text-foreground/90 prose-p:text-foreground/80">
           <Container className="mb-12 space-y-8">
             <AnimatedListItem>
@@ -86,16 +72,6 @@ export function ArticleView({ post, category, media }: ArticleProps) {
                     <Clock className="h-4 w-4" />
                     <span>{` ${readingTime} minute(s)`}</span>
                   </div>
-                  {/* <Button
-                    id="share-button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleShare}
-                    className="ml-auto"
-                  >
-                    <Share2 className="mr-2 h-4 w-4" />
-                    {copied ? "Link copied" : "Share"}
-                  </Button> */}
                 </div>
               </header>
             </AnimatedListItem>

@@ -16,7 +16,7 @@ interface PostPageProps {
   };
 }
 
-// 动态生成元数据
+
 export async function generateMetadata({
   params,
 }: PostPageProps): Promise<Metadata> {

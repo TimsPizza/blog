@@ -157,7 +157,7 @@
 
   /* Reading progress bar */
   .reading-progress {
-    @apply fixed top-0 left-0 h-1 bg-primary/60 transition-all duration-300 z-50;
+    @apply fixed top-0 left-0 h-1 bg-primary/60 z-50;
   }
 
   /* Table of contents */

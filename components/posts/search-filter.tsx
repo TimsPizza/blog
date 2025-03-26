@@ -14,14 +14,14 @@ interface SearchFilterProps {
 export function SearchFilter({ categories }: SearchFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [sortBy, setSortBy] = useState(searchParams.get("sort") || "date");
 
   const createQueryString = useCallback(
     (params: Record<string, string | null>) => {
       const newSearchParams = new URLSearchParams(searchParams.toString());
-      
+
       Object.entries(params).forEach(([key, value]) => {
         if (value === null) {
           newSearchParams.delete(key);
@@ -29,10 +29,10 @@ export function SearchFilter({ categories }: SearchFilterProps) {
           newSearchParams.set(key, value);
         }
       });
-      
+
       return newSearchParams.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   const handleSearch = () => {
