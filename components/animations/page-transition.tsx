@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import {usePathname} from "next/navigation"
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
 interface PageTransitionProps {
@@ -25,32 +25,25 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children }) => {
       }
 
       const tl = gsap.timeline();
-      
-      : 0 开始
+
       gsap.set(element, { opacity: 0 });
 
-      
       tl.to(element, {
         opacity: 1,
         duration: 1,
         ease: "power2.out",
-        clearProps: "opacity" 
+        clearProps: "opacity",
       });
     }, element);
 
-    return () => ctx.revert(); 
-  }, [location]); 
+    return () => ctx.revert();
+  }, [location]);
 
   return (
-    <div
-      ref={elementRef}
-      className="h-full w-full"
-      style={{ opacity: 0 }} 
-    >
+    <div ref={elementRef} className="h-full w-full" style={{ opacity: 0 }}>
       {children}
     </div>
   );
 };
-
 
 export default React.memo(PageTransition);
