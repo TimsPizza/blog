@@ -1,20 +1,14 @@
 "use client";
 
-import { Post } from "@/lib/wordpress.d";
-import { useRef } from "react";
-import {
-  AnimatedSection,
-  AnimatedList,
-  AnimatedListItem,
-} from "@/components/animations/animated-section";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { TableOfContents } from "./table-of-contents";
-import { ReadingProgress } from "./reading-progress";
-import Image from "next/image";
-import { Calendar, Clock, Share2 } from "lucide-react";
-import { useState } from "react";
+import { AnimatedListItem } from "@/components/animations/animated-section";
 import { Container } from "@/components/craft";
+import { Badge } from "@/components/ui/badge";
+import { Post } from "@/lib/wordpress.d";
+import { Calendar, Clock } from "lucide-react";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { ReadingProgress } from "./reading-progress";
+import { TableOfContents } from "./table-of-contents";
 
 interface ArticleProps {
   post: Post;
@@ -30,7 +24,6 @@ interface ArticleProps {
 }
 
 export function ArticleView({ post, category, media }: ArticleProps) {
-  const [copied, setCopied] = useState(false);
   const articleRef = useRef<HTMLDivElement>(null);
 
   // estimate reading time
@@ -47,8 +40,8 @@ export function ArticleView({ post, category, media }: ArticleProps) {
   return (
     <>
       <ReadingProgress articleRef={articleRef} />
-      <div ref={articleRef} className="relative ">
-        <article className="prose prose-lg relative mx-auto prose-headings:text-foreground/90 prose-p:text-foreground/80">
+      <div ref={articleRef} className="relative">
+        <article className="prose relative mx-auto lg:prose-lg xl:prose-xl 2xl:prose-2xl prose-headings:text-foreground/90 prose-p:text-foreground/80">
           <Container className="mb-12 space-y-8">
             <AnimatedListItem>
               <header className="not-prose">
@@ -92,6 +85,7 @@ export function ArticleView({ post, category, media }: ArticleProps) {
 
             <AnimatedListItem>
               <div
+                id="article-content"
                 className="reading-prose"
                 dangerouslySetInnerHTML={{
                   __html: post.content?.rendered || "",
@@ -101,7 +95,10 @@ export function ArticleView({ post, category, media }: ArticleProps) {
           </Container>
         </article>
 
-        <TableOfContents content={post.content?.rendered || ""} />
+        <TableOfContents
+          className="hidden md:!fixed"
+          content={post.content?.rendered || ""}
+        />
       </div>
     </>
   );

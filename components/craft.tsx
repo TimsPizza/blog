@@ -180,7 +180,7 @@ const styles = {
   layout: {
     spacing: "[&>*+*]:mt-6",
     article: "max-w-prose",
-    container: "max-w-5xl mx-auto p-6 sm:p-8",
+    container: "md:max-w-6xl md:mx-auto p-6 sm:p-8",
     section: "py-8 md:py-12",
   },
 };
@@ -242,7 +242,7 @@ export const Article = ({
       articleTypographyStyles,
       styles.layout.spacing,
       styles.layout.article,
-      className
+      className,
     )}
     id={id}
   >
@@ -268,7 +268,7 @@ export const Prose = ({
 // Utility function for responsive classes
 const getResponsiveClass = <T extends string | number>(
   value: ResponsiveValue<T> | undefined,
-  classMap: Record<T, string>
+  classMap: Record<T, string>,
 ): string => {
   if (!value) return "";
   if (typeof value === "object") {
@@ -340,7 +340,7 @@ export const Box = ({
         getResponsiveClass(gap, gapClasses),
         cols && getResponsiveClass(cols, colsClasses),
         rows && getResponsiveClass(rows, colsClasses),
-        className
+        className,
       )}
       id={id}
     >

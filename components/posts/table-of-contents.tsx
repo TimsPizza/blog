@@ -134,7 +134,7 @@ export function TableOfContents({
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
       className={cn(
-        "fixed left-8 top-32 hidden w-64 bg-transparent xl:block",
+        "left-8 top-32 hidden w-64 bg-transparent xl:block",
         className,
       )}
     >
