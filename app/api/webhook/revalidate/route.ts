@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         { status: 401 }
       );
     }
-
+    console.log("[WEBHOOK_REVALIDATE] request body:", body);
     // 获取需要revalidate的tags (Get tags to revalidate)
     const tags = body.tags as string[];
     
