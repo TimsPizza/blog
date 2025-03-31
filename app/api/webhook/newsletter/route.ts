@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     console.log("[WEBHOOK_NEWSLETTER] post_title:", post_title);
     console.log("[WEBHOOK_NEWSLETTER] post_excerpt:", post_excerpt);
     console.log("[WEBHOOK_NEWSLETTER] link:", link);
-    if (!post_title || !post_excerpt || !link) {
+    if (!post_title || !link) {
       return NextResponse.json(
         { message: "Missing required post information" },
         { status: 400 },
