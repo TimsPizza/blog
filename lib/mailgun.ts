@@ -18,14 +18,14 @@ export async function sendEmail({
   to,
   subject,
   html,
-  from = `Blog <noreply@${MAILGUN_DOMAIN}>`,
+  from = `tim's nest subscription <subscription@${MAILGUN_DOMAIN}>`,
 }: SendEmailParams) {
   try {
     const result = await client.messages.create(MAILGUN_DOMAIN, {
-      from,
-      to,
-      subject,
-      html,
+      from: from,
+      to: to,
+      subject: subject,
+      html: html,
     });
 
     console.log("[MAILGUN_SEND_SUCCESS]", result);
