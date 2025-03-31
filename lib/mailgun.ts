@@ -20,10 +20,6 @@ export async function sendEmail({
   html,
   from = `tim's nest subscription <subscription@${MAILGUN_DOMAIN}>`,
 }: SendEmailParams) {
-  console.log(
-    "[MAILGUN_SEND] Sending emails to",
-    to.forEach((v, i) => console.log(v)),
-  );
   try {
     const result = await client.messages.create(MAILGUN_DOMAIN, {
       from: from,

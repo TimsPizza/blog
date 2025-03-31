@@ -41,10 +41,6 @@ function buildApiUrl(
       searchParams.append(key, value);
     });
   }
-  console.log(
-    "[NEWSLETTER_API_URL]",
-    `${NEWSLETTER_API_URL}${endpoint}?${searchParams.toString()}`,
-  );
   return `${NEWSLETTER_API_URL}${endpoint}?${searchParams.toString()}`;
 }
 

@@ -19,7 +19,7 @@ export function generateEmailTemplate({
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${siteName} - New Post Notification</title>
+        <title>New Post Notification</title>
         <style>
           body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -64,17 +64,13 @@ export function generateEmailTemplate({
           <h1>${siteName}</h1>
         </div>
         <div class="content">
-          <h2>新文章发布 (New Post Published)</h2>
+          <h2>New Post Published</h2>
           <h3>${title}</h3>
           <p>${excerpt}</p>
-          <a href="${link}" class="button">阅读全文 (Read More)</a>
+          <a href="${link}" class="button">Read More</a>
         </div>
         <div class="footer">
-          <p>感谢订阅 ${siteName}</p>
           <p>Thanks for subscribing to ${siteName}</p>
-          <p class="unsubscribe">
-            <a href="${siteUrl}/unsubscribe">取消订阅 (Unsubscribe)</a>
-          </p>
         </div>
       </body>
     </html>
