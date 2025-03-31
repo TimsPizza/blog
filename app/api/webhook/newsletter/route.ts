@@ -19,12 +19,8 @@ export async function POST(request: Request) {
     }
 
     // 验证必要的文章信息 (Verify required post information)
-    console.log("[WEBHOOK_NEWSLETTER] request body:", body);
     const link = body.post_permalink;
     const { post_title, post_excerpt } = body.post;
-    console.log("[WEBHOOK_NEWSLETTER] post_title:", post_title);
-    console.log("[WEBHOOK_NEWSLETTER] post_excerpt:", post_excerpt);
-    console.log("[WEBHOOK_NEWSLETTER] link:", link);
     if (!post_title || !link) {
       return NextResponse.json(
         { message: "Missing required post information" },
