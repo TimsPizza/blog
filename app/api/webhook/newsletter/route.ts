@@ -3,6 +3,7 @@ import { generateEmailTemplate } from "./email-template";
 import { sendEmail } from "@/lib/mailgun";
 import { getSubscribers } from "@/lib/newsletter";
 import { siteConfig } from "@/site.config";
+import { WHPostCreatedRequestBody } from "@/lib/types/revalidatehook";
 
 // Webhook Secret for authentication
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -10,43 +11,41 @@ const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 export async function POST(request: Request) {
   try {
     // 验证webhook请求 (Verify webhook request)
-    const body = await request.json();
+    const body = (await request.json()) as WHPostCreatedRequestBody;
     const signature = request.headers.get("x-webhook-signature");
 
     if (!signature || signature !== WEBHOOK_SECRET) {
-      return NextResponse.json(
-        { message: "Unauthorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     // 验证必要的文章信息 (Verify required post information)
-    const { title, excerpt, link } = body;
-    if (!title || !excerpt || !link) {
+    const link = body.post_permalink;
+    const { post_title, post_excerpt } = body.post_meta;
+    if (!post_title || !post_excerpt || !link) {
       return NextResponse.json(
         { message: "Missing required post information" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // 获取活跃订阅者列表 (Get active subscribers)
     const subscribers = await getSubscribers();
     const activeSubscribers = subscribers.filter(
-      (sub) => sub.status === "confirmed"
+      (sub) => sub.status === "confirmed",
     );
 
     if (activeSubscribers.length === 0) {
       return NextResponse.json(
         { message: "No active subscribers" },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
     // 生成邮件内容 (Generate email content)
     const emailHtml = generateEmailTemplate({
-      title,
-      excerpt,
-      link,
+      title: post_title,
+      excerpt: post_excerpt,
+      link: link,
       siteName: siteConfig.site_name || "Tim's Nest",
       siteUrl: siteConfig.site_domain || "http://localhost:3000",
     });
@@ -54,7 +53,7 @@ export async function POST(request: Request) {
     // 发送邮件给所有活跃订阅者 (Send email to all active subscribers)
     await sendEmail({
       to: activeSubscribers.map((sub) => sub.email),
-      subject: `New Post: ${title}`,
+      subject: `New Post: ${post_title}`,
       html: emailHtml,
     });
 
@@ -63,13 +62,13 @@ export async function POST(request: Request) {
         message: "Newsletter sent successfully",
         subscriberCount: activeSubscribers.length,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("[WEBHOOK_NEWSLETTER_ERROR]", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
