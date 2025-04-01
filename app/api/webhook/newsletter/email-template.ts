@@ -44,6 +44,11 @@ export function generateEmailTemplate({
             align-items: center;
             justify-content: center;
           }
+          .content div {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+          }
           .button {
             display: inline-block;
             padding: 12px 24px;
@@ -69,10 +74,16 @@ export function generateEmailTemplate({
           <h1>${siteName}</h1>
         </div>
         <div class="content">
-          <h2>Hi! I just uploaded something new!</h2>
-          <h3>${title}</h3>
-          <p>${excerpt}</p>
-          <a href="${link}" class="button">Go to site</a>
+          <div>
+            <h2>Hi! I just drafted something new!</h2>
+          </div>
+          <div>
+            <h3>${title}</h3>
+          </div>
+          <div>
+            <p>${excerpt}</p>
+          </div>
+          <a href="${link}" class="button">Visit site</a>
         </div>
         <div class="footer">
           <p>Thanks for subscribing to ${siteName}</p>
