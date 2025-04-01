@@ -13,7 +13,6 @@ export async function PostCard({ post }: { post: Post }) {
   const media = post.featured_media && post.featured_media !== 0
     ? await getFeaturedMediaById(post.featured_media)
     : null;
-  const author = post.author ? await getAuthorById(post.author) : null;
   const date = new Date(post.date).toLocaleDateString("zh-CN", {
     year: "numeric",
     month: "long",

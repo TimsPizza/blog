@@ -393,7 +393,7 @@ export async function getPostsByTagSlug(tagSlug: string): Promise<Post[]> {
   return response;
 }
 
-export async function getFeaturedMediaById(id: number): Promise<FeaturedMedia> {
+export async function getFeaturedMediaById(id: number): Promise<FeaturedMedia | null> {
   try {
     const url = getUrl(`/wp-json/wp/v2/media/${id}`);
     const response = await wordpressFetch<FeaturedMedia>(url, {
@@ -405,6 +405,7 @@ export async function getFeaturedMediaById(id: number): Promise<FeaturedMedia> {
     return response;
   } catch (error) {
     console.error("Error fetching featured media:", error);
+    return null;
   }
 }
 
