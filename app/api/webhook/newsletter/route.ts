@@ -7,6 +7,8 @@ import { WHPostCreatedRequestBody } from "@/lib/types/revalidatehook";
 
 // Webhook Secret for authentication
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+const SITE_BASE_URL = process.env.SITE_BASE_URL;
+
 
 export async function POST(request: Request) {
   try {
@@ -19,7 +21,8 @@ export async function POST(request: Request) {
     }
 
     // 验证必要的文章信息 (Verify required post information)
-    const link = body.post_permalink;
+    const suffix = body.post_permalink.split(('/')).at(-1);
+    const link = SITE_BASE_URL + "/posts/" + suffix;
     const { post_title, post_excerpt } = body.post;
     if (!post_title || !link) {
       return NextResponse.json(
