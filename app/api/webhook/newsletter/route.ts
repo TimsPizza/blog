@@ -9,7 +9,6 @@ import { WHPostCreatedRequestBody } from "@/lib/types/revalidatehook";
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 const SITE_BASE_URL = process.env.SITE_BASE_URL;
 
-
 export async function POST(request: Request) {
   try {
     // 验证webhook请求 (Verify webhook request)
@@ -19,10 +18,11 @@ export async function POST(request: Request) {
     if (!signature || signature !== WEBHOOK_SECRET) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
+    // 获取文章链接 (Get post link)
+    const suffix = body.post.post_name;
+    const link = SITE_BASE_URL + "/posts/" + suffix;
 
     // 验证必要的文章信息 (Verify required post information)
-    const suffix = body.post_permalink.split(('/')).at(-1);
-    const link = SITE_BASE_URL + "/posts/" + suffix;
     const { post_title, post_excerpt } = body.post;
     if (!post_title || !link) {
       return NextResponse.json(
