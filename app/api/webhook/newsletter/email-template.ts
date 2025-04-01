@@ -40,11 +40,11 @@ export function generateEmailTemplate({
             margin-bottom: 20px;
             width: 100%;
             display: flex;
-            flex-direction: column;
+            flex-direction: column !important;
             align-items: center;
             justify-content: center;
           }
-          .content div {
+          .content > div {
             width: 100%;
             margin-bottom: 20px;
             text-align: center;
@@ -80,10 +80,15 @@ export function generateEmailTemplate({
           <div>
             <h3>${title}</h3>
           </div>
-          <div>
-            <p>${excerpt}</p>
+          ${
+            excerpt &&
+            `<div>
+              <p>${excerpt}</p>
+            </div>`
+          }
+          <div> 
+            <a href="${link}" class="button">Visit site</a>
           </div>
-          <a href="${link}" class="button">Visit site</a>
         </div>
         <div class="footer">
           <p>Thanks for subscribing to ${siteName}</p>
