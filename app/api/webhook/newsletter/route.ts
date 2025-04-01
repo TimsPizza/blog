@@ -7,7 +7,7 @@ import { WHPostCreatedRequestBody } from "@/lib/types/revalidatehook";
 
 // Webhook Secret for authentication
 const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
-const SITE_BASE_URL = process.env.SITE_BASE_URL;
+const SITE_BASE_URL = process.env.SITE_BASE_URL || "http://localhost:3000";
 
 export async function POST(request: Request) {
   try {
