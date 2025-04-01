@@ -38,12 +38,17 @@ export function generateEmailTemplate({
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
           }
           .button {
             display: inline-block;
             padding: 12px 24px;
-            background-color: #0070f3;
-            color: white;
+            background-color: #2b2b2b;
+            color: #fff !important;
             text-decoration: none;
             border-radius: 5px;
             margin: 20px 0;
@@ -64,10 +69,10 @@ export function generateEmailTemplate({
           <h1>${siteName}</h1>
         </div>
         <div class="content">
-          <h2>New Post Published</h2>
+          <h2>Hi! I just uploaded something new!</h2>
           <h3>${title}</h3>
           <p>${excerpt}</p>
-          <a href="${link}" class="button">Read More</a>
+          <a href="${link}" class="button">Go to site</a>
         </div>
         <div class="footer">
           <p>Thanks for subscribing to ${siteName}</p>

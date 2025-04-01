@@ -19,18 +19,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
     // 获取文章链接 (Get post link)
-    const suffix = body.post.post_name;
-    const link = SITE_BASE_URL + "/posts/" + suffix;
 
     // 验证必要的文章信息 (Verify required post information)
     const { post_title, post_excerpt } = body.post;
-    if (!post_title || !link) {
+    if (!post_title) {
       return NextResponse.json(
         { message: "Missing required post information" },
         { status: 400 },
       );
     }
 
+    const link = SITE_BASE_URL;
     // 获取活跃订阅者列表 (Get active subscribers)
     const subscribers = await getSubscribers();
     const activeSubscribers = subscribers.filter(
