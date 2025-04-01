@@ -22,13 +22,14 @@ interface AuthorType {
   name: string;
 }
 
-interface ExtendedPost extends Post {
+export interface ExtendedPost extends Post {
   _media?: MediaType;
   _author?: AuthorType;
   _category?: CategoryType;
 }
 
 export function PostsGrid({ posts, currentPage, totalPages }: PostsGridProps) {
+  console.log("[POSTS_GRID]", posts, currentPage, totalPages);
   return (
     <div className="space-y-8">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

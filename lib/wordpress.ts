@@ -82,12 +82,16 @@ async function wordpressFetch<T>(
 
 // WordPress Functions
 
-export async function getAllPosts(filterParams?: {
-  author?: string | number;
-  tag?: string | number;
-  category?: string | number;
-  search?: string;
-} | undefined): Promise<Post[]> {
+export async function getAllPosts(
+  filterParams?:
+    | {
+        author?: string | number;
+        tag?: string | number;
+        category?: string | number;
+        search?: string;
+      }
+    | undefined,
+): Promise<Post[]> {
   const query: Record<string, any> = {
     _embed: true,
     per_page: 100,
@@ -390,15 +394,18 @@ export async function getPostsByTagSlug(tagSlug: string): Promise<Post[]> {
 }
 
 export async function getFeaturedMediaById(id: number): Promise<FeaturedMedia> {
-  const url = getUrl(`/wp-json/wp/v2/media/${id}`);
-  const response = await wordpressFetch<FeaturedMedia>(url, {
-    next: {
-      ...defaultFetchOptions.next,
-      tags: ["wordpress", `media-${id}`],
-    },
-  });
-
-  return response;
+  try {
+    const url = getUrl(`/wp-json/wp/v2/media/${id}`);
+    const response = await wordpressFetch<FeaturedMedia>(url, {
+      next: {
+        ...defaultFetchOptions.next,
+        tags: ["wordpress", `media-${id}`],
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching featured media:", error);
+  }
 }
 
 // Helper function to search across categories

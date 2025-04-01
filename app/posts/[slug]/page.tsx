@@ -24,7 +24,7 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: { params: any }) {
   const post = await getPostBySlug(params.slug);
-  const media = post.featured_media
+  const media = post.featured_media && post.featured_media !== 0
     ? await getFeaturedMediaById(post.featured_media)
     : null;
   const category = post.categories?.[0]

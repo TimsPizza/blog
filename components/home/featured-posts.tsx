@@ -1,22 +1,10 @@
 import { Section } from "@/components/craft";
-import {
-  getAllPosts,
-  getFeaturedMediaById
-} from "@/lib/wordpress";
+import { getAllPosts, getFeaturedMediaById } from "@/lib/wordpress";
 import { ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
 
 export async function FeaturedPosts() {
   const posts = (await getAllPosts()).slice(0, 4);
-  const medias = await Promise.all(
-    posts.map((post) => {
-      try {
-        getFeaturedMediaById(post.featured_media);
-      } catch (e) {
-        return { source_url: null };
-      }
-    }),
-  );
 
   return (
     <Section className="bg-muted/50 py-12">

@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export async function PostCard({ post }: { post: Post }) {
-  const media = post.featured_media
+  const media = post.featured_media && post.featured_media !== 0
     ? await getFeaturedMediaById(post.featured_media)
     : null;
   const author = post.author ? await getAuthorById(post.author) : null;

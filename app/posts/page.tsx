@@ -1,7 +1,11 @@
 import { Container, Section } from "@/components/craft";
-import { PostsGrid } from "@/components/posts/posts-grid";
+import { ExtendedPost, PostsGrid } from "@/components/posts/posts-grid";
 import { SearchFilter } from "@/components/posts/search-filter";
-import { getAllCategories, getAllPosts } from "@/lib/wordpress";
+import {
+  getAllCategories,
+  getAllPosts,
+  getFeaturedMediaById,
+} from "@/lib/wordpress";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -45,7 +49,23 @@ export default async function PostsPage({
     return Object.keys(params).length > 0 ? params : undefined;
   })();
 
-  const allPosts = await getAllPosts(queryParams);
+  const allPosts = await getAllPosts(queryParams).then(async (posts) => {
+    console.log("[POSTS]", posts);
+    const new_post = await Promise.all(
+      posts.map(async (post) => {
+        const media = post.featured_media && post.featured_media !== 0
+          ? await getFeaturedMediaById(post.featured_media)
+          : null;
+        if (media) {
+          // @ts-ignore
+          post._media = media;
+        }
+        return post;
+      }),
+    );
+    console.log("[POSTS]", new_post);
+    return new_post;
+  });
 
   const sortedPosts = [...allPosts].sort((a, b) => {
     switch (sort) {
